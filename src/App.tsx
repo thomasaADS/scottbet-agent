@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 
+import { Nav, SiteFooter } from "@/components/site/chrome";
 import { DemoGames } from "@/components/site/games";
+import { ArticlePage } from "@/Page";
+import { HOME_FAQ, findPage } from "@/seo/pages";
 import "@/ref.css";
 import "@/components/site/games.css";
+import "@/components/site/pages.css";
 import { site } from "@/site-config";
 
 const YEARS = 8;
@@ -55,17 +59,7 @@ const BADGES = [
   { title: "בלי סוכנים", text: "אתם בשליטה מלאה" },
 ];
 
-const FAQ = [
-  { q: "מה יש באתר?", a: "חצי ספורט, חצי קזינו. הימורי ספורט על כדורגל, כדורסל וטניס, כולל הימורים חיים, ולצידם סלוטים, רולטה, בלאקג'ק וקזינו חי." },
-  { q: "יש שידורים חיים?", a: "כן. משחקי כדורגל וכדורסל משודרים ישירות בתוך האתר, ואפשר להמר תוך כדי צפייה, באותו מסך." },
-  { q: "איך מקבלים את בונוס ההצטרפות?", a: "ממלאים את הטופס בתחתית העמוד, האתר נפתח בחלון חדש ומשלימים שם את ההרשמה. בהפקדה הראשונה הבונוס מכפיל את הסכום ב-100%." },
-  { q: "כמה זמן לוקחת משיכת זכיות?", a: "תשלום הזכיות מיידי. את המשיכה מבצעים לבד, ישירות מהחשבון, בלי לחכות לאישור של אף אחד, בכל שעה." },
-  { q: "למה אין סוכנים?", a: "כי סוכן הוא נקודת כשל. אצלנו החשבון מנוהל ישירות מולכם, כך שאף אחד לא יכול להיעלם או לעכב לכם כסף ברגע האמת." },
-  { q: "איך עובד ההחזר החודשי?", a: "בסוף כל חודש מקבלים בחזרה עד 20% מסך ההפסדים, ישירות ליתרה בחשבון." },
-  { q: "אילו אמצעי תשלום מקבלים?", a: "ויזה, מאסטרקארד, אמריקן אקספרס, ביט, פייבוקס, מזומן וקריפטו. אותם אמצעים זמינים גם להפקדה וגם למשיכה." },
-  { q: "איך פונים לשירות הלקוחות?", a: "דרך הצ'אט בתוך האתר, 24 שעות ביממה, 7 ימים בשבוע. צוות דובר עברית עונה תוך דקות." },
-  { q: "האתר עובד טוב בנייד?", a: "האתר בנוי קודם כל לנייד: הימורים, שידורים חיים, הפקדות ומשיכות, הכל מהטלפון, בלי להוריד אפליקציה." },
-];
+const FAQ = HOME_FAQ;
 
 function goToSignup() {
   const input = document.querySelector<HTMLInputElement>("#signup input");
@@ -89,29 +83,20 @@ function Chevron() {
   );
 }
 
-function Nav() {
-  return (
-    <nav>
-      <img alt="scottbet" className="h-7 md:h-9 w-auto" src="/images/brand-logo.svg" />
-      <a className="nav-cta" href={SIGNUP}>קבלו בונוס</a>
-    </nav>
-  );
-}
-
 function Hero() {
-  const [mobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches);
+  const video = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const element = video.current;
+    if (!element) return;
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
+    element.src = `/videos/hero${mobile ? "-mobile" : ""}.mp4`;
+    element.play().catch(() => undefined);
+  }, []);
+
   return (
-    <section className="hero-section">
-      <video
-        aria-hidden="true"
-        autoPlay
-        className="hero-video"
-        loop
-        muted
-        playsInline
-        poster="/images/hero-bg.webp"
-        src={`/videos/hero${mobile ? "-mobile" : ""}.mp4`}
-      />
+    <section className="hero-section" id="top">
+      <video aria-hidden="true" className="hero-video" loop muted playsInline poster="/images/hero-bg.webp" preload="none" ref={video} />
       <div className="hero-content">
         <p className="hero-kicker">הבית של הספורט הישראלי · בלי סוכנים</p>
         <h1 className="hero-headline">100% בונוס על ההפקדה הראשונה</h1>
@@ -152,7 +137,7 @@ function SiteTour() {
             {TOUR.map((item) => (
               <li key={item.src}>
                 <div className="tour-phone">
-                  <img alt={item.caption} loading="lazy" src={item.src} />
+                  <img alt={item.caption} height={640} loading="lazy" src={item.src} width={320} />
                 </div>
                 <p>{item.caption}</p>
               </li>
@@ -382,7 +367,7 @@ function Signup() {
   );
 }
 
-export default function App() {
+function Home() {
   const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
@@ -395,7 +380,7 @@ export default function App() {
 
   return (
     <>
-      <Nav />
+      <Nav home />
       <main>
         <Hero />
         <SiteTour />
@@ -406,12 +391,12 @@ export default function App() {
         <Signup />
         <a className={`support-btn ${heroVisible ? "invisible opacity-0" : ""}`} href="#faq">צ'אט תמיכה 24/7</a>
       </main>
-      <footer className="site-footer">
-        <img alt="scottbet" className="h-8 w-auto" src="/images/brand-logo.svg" />
-        <p>
-          <b>18+</b> · הימרו באחריות. ההימורים מיועדים לבגירים בלבד וכרוכים בסיכון כספי. ההטבות כפופות לתקנון האתר.
-        </p>
-      </footer>
+      <SiteFooter home />
     </>
   );
+}
+
+export default function App({ path }: { path: string }) {
+  const page = findPage(path);
+  return page ? <ArticlePage page={page} /> : <Home />;
 }

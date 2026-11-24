@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://scottbet-agent.vercel.app/sitemap.xml

@@ -1,0 +1,182 @@
+/* Keyword landing pages and footer links, in the scottbet brand style. */
+.footer-links {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.4rem;
+  width: 100%;
+  max-width: 60rem;
+  height: auto;
+  margin: 0 auto 0.5rem;
+  padding: 0;
+  background: none;
+  font-size: 0.95rem;
+}
+
+.footer-links a {
+  color: #ffffffb3;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: #ffd84a;
+  text-underline-offset: 0.3em;
+}
+
+.seo-hero {
+  display: grid;
+  justify-items: center;
+  gap: 1.2rem;
+  padding: 8rem 1.25rem 4rem;
+  background: #3470d8;
+  color: #fff;
+  text-align: center;
+}
+
+.seo-hero h1 {
+  max-width: 22ch;
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.1rem, 5.4vw, 3.8rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.seo-hero > p {
+  max-width: 40rem;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  opacity: 0.92;
+}
+
+.seo-crumbs {
+  position: static;
+  display: flex;
+  gap: 0.5rem;
+  height: auto;
+  padding: 0;
+  background: none;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.seo-crumbs a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.seo-body {
+  display: grid;
+  gap: 2.4rem;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem;
+  color: #1c1c1c;
+}
+
+.seo-body h2 {
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+
+.seo-body p {
+  margin-top: 0.7rem;
+  color: #505050;
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.seo-body ul {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.seo-body li {
+  position: relative;
+  padding: 0.7rem 2.6rem 0.7rem 1rem;
+  border: 1px solid #e2e5ea;
+  border-radius: 0.8rem;
+  background: #f4f5f7;
+  font-weight: 700;
+}
+
+.seo-body li::before {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: 50%;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: #ffd84a;
+  content: "";
+  transform: translateY(-50%);
+}
+
+.seo-page {
+  background: #fff;
+}
+
+.seo-more {
+  display: grid;
+  justify-items: center;
+  gap: 1.8rem;
+  padding: 4rem 1.25rem;
+  background: #1c1c1c;
+  color: #fff;
+  text-align: center;
+}
+
+.seo-more h2 {
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.seo-more ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 68rem;
+  text-align: start;
+}
+
+.seo-more li a {
+  display: grid;
+  gap: 0.3rem;
+  height: 100%;
+  padding: 1.1rem 1.2rem;
+  border: 2px solid #2c2c2c;
+  border-radius: 1rem;
+  background: #0a0a0a;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.seo-more li a:hover {
+  border-color: #ffd84a;
+  transform: translateY(-3px);
+}
+
+.seo-more li b {
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-size: 1.15rem;
+  color: #ffd84a;
+}
+
+.seo-more li span {
+  color: #b8bcc6;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.seo-hero,
+.seo-more,
+.seo-body {
+  grid-template-columns: minmax(0, 1fr);
+}
