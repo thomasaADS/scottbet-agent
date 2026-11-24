@@ -1,14 +1,12 @@
 /**
- * All agent-specific details live here. Fill in the empty fields and the
+ * All site links live here. Fill in the empty fields and the
  * matching buttons appear across the site automatically.
  */
 export const site = {
   brand: "Scottbet",
   /** Where every "enter the site" button sends the visitor (referral link). */
   platformUrl: "https://scottbet.com/he",
-  /** Agent display name, e.g. "דני". Empty = generic "הסוכן האישי שלך". */
-  agentName: "",
-  /** WhatsApp number in international format, digits only, e.g. 972501234567. */
+  /** Customer-service WhatsApp number in international format, digits only, e.g. 972501234567. */
   whatsappNumber: "",
   /** Telegram link, e.g. https://t.me/username */
   telegramUrl: "",
@@ -19,4 +17,3 @@ export function whatsappUrl(text: string): string | null {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
 
-export const agentLabel = site.agentName ? site.agentName : "הסוכן האישי שלך";
