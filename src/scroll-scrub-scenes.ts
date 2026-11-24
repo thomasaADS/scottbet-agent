@@ -9,10 +9,10 @@ import type {
 } from "@/components/scroll-scrub/scroll-scrub";
 
 export const scrollScrubTheme: ScrollScrubTheme = {
-  accent: "#E8C46A",
-  background: "#04170F",
-  ink: "#F6F0E0",
-  muted: "#B4C2B6",
+  accent: "#FFD447",
+  background: "#081A40",
+  ink: "#FFFFFF",
+  muted: "#C3CFEC",
 };
 
 function media(n: string) {
@@ -42,7 +42,7 @@ export const scrollScrubScenes: ScrollScrubScene[] = [
     label: "עולמות",
     title: "הגלגל כבר מסתובב",
     body: "רולטה, בלאק ג׳ק ובאקרה מול דילרים אמיתיים, מאות סלוטים וליין ספורט מכל העולם. הכול מאותו חשבון.",
-    align: "left",
+    align: "right",
     scroll: 1.4,
   },
   {
@@ -61,7 +61,7 @@ export const scrollScrubScenes: ScrollScrubScene[] = [
     label: "משחקים",
     title: "רוצים לטעום קודם?",
     body: "שישה משחקי דמו מחכים למטה: גלגל המזל, סלוטים, קראש ועוד. משחקים בחינם, בלי הרשמה ובלי כסף אמיתי.",
-    align: "left",
+    align: "right",
     scroll: 1.6,
   },
 ];

@@ -2,10 +2,12 @@ import { ScrollScrub } from "@/components/scroll-scrub/scroll-scrub";
 import type { ScrollScrubScene } from "@/components/scroll-scrub/scroll-scrub";
 import { DemoGames } from "@/components/site/games";
 import {
-  AgeGate,
   EnterCta,
   Faq,
   FinalCall,
+  HeroStats,
+  HeroStrip,
+  SeoBlock,
   GhostLink,
   SiteFooter,
   SiteHeader,
@@ -24,6 +26,7 @@ const chapterActions = [
     <EnterCta key="enter">כניסה ל-{site.brand}</EnterCta>
     <WhatsappCta key="wa">פתיחת חשבון בוואטסאפ</WhatsappCta>
     <GhostLink href="#games" key="demo">למשחקי הדמו</GhostLink>
+    <HeroStats key="stats" />
   </>,
   <GhostLink href="#worlds" key="worlds">לעולמות המשחק</GhostLink>,
   <GhostLink href="#how" key="how">איך מצטרפים</GhostLink>,
@@ -44,17 +47,20 @@ export default function App() {
     <div className="site">
       <SiteHeader />
       <main>
-        <ScrollScrub className="journey" scenes={journeyScenes} theme={scrollScrubTheme} />
-        <DemoGames />
+        <div className="journey-wrap">
+          <ScrollScrub className="journey" scenes={journeyScenes} theme={scrollScrubTheme} />
+          <HeroStrip />
+        </div>
         <Worlds />
         <Steps />
         <Why />
         <Faq />
+        <DemoGames />
+        <SeoBlock />
         <FinalCall />
       </main>
       <SiteFooter />
       <StickyBar />
-      <AgeGate />
     </div>
   );
 }

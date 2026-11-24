@@ -48,11 +48,11 @@ export function GhostLink({ children, href }: { children: ReactNode; href: strin
 /* ---------------------------------------------------------------- header */
 
 const NAV = [
-  { href: "#games", label: "משחקי דמו" },
   { href: "#worlds", label: "עולמות המשחק" },
   { href: "#how", label: "איך מצטרפים" },
   { href: "#why", label: "למה סוכן" },
   { href: "#faq", label: "שאלות" },
+  { href: "#games", label: "משחקי דמו" },
 ];
 
 export function SiteHeader() {
@@ -68,8 +68,7 @@ export function SiteHeader() {
   return (
     <header className="site-header" data-solid={solid ? "true" : "false"}>
       <a aria-label={`${site.brand}, לראש העמוד`} className="site-logo" href="#top">
-        <span aria-hidden="true" className="site-logo__mark" />
-        <span className="site-logo__word" dir="ltr">{site.brand}</span>
+        <span className="site-logo__word" dir="ltr">scott<b>bet</b></span>
         <span className="site-logo__tag">סוכן רשמי</span>
       </a>
       <nav aria-label="ניווט ראשי" className="site-nav">
@@ -81,56 +80,6 @@ export function SiteHeader() {
         כניסה ל-{site.brand}
       </a>
     </header>
-  );
-}
-
-/* -------------------------------------------------------------- age gate */
-
-const AGE_KEY = "age-confirmed-v1";
-
-export function AgeGate() {
-  const [state, setState] = useState<"unknown" | "ask" | "ok" | "blocked">("unknown");
-
-  useEffect(() => {
-    let confirmed = false;
-    try {
-      confirmed = window.localStorage.getItem(AGE_KEY) === "1";
-    } catch {
-      confirmed = false;
-    }
-    setState(confirmed ? "ok" : "ask");
-  }, []);
-
-  if (state === "unknown" || state === "ok") return null;
-
-  const confirm = () => {
-    try {
-      window.localStorage.setItem(AGE_KEY, "1");
-    } catch {
-      /* storage unavailable: keep the answer for this visit only */
-    }
-    setState("ok");
-  };
-
-  return (
-    <div aria-labelledby="age-title" aria-modal="true" className="age-gate" role="dialog">
-      <div className="age-gate__card">
-        <span aria-hidden="true" className="age-gate__badge">18+</span>
-        {state === "ask" ? (
-          <>
-            <h2 className="age-gate__title" id="age-title">האתר מיועד לגילאי 18 ומעלה</h2>
-            <p className="age-gate__text">הימורים עלולים לגרום להתמכרות. משחקים רק בכסף שאפשר להרשות לעצמכם להפסיד.</p>
-            <button className="age-gate__yes" onClick={confirm} type="button">מלאו לי 18, אפשר להמשיך</button>
-            <button className="age-gate__no" onClick={() => setState("blocked")} type="button">אני מתחת לגיל 18</button>
-          </>
-        ) : (
-          <>
-            <h2 className="age-gate__title" id="age-title">נתראה בעוד כמה שנים</h2>
-            <p className="age-gate__text">האתר פתוח לבגירים בלבד.</p>
-          </>
-        )}
-      </div>
-    </div>
   );
 }
 
@@ -302,9 +251,112 @@ export function FinalCall() {
   );
 }
 
+const STRIP = ["ספורט חי", "קזינו חי", "מכונות מזל", "רולטה", "בלאק ג׳ק", "פוקר", "קראש", "גלגל המזל", "ליווי אישי", "משחקי דמו בחינם"];
+
+export function HeroStrip() {
+  return (
+    <div aria-hidden="true" className="hero-strip">
+      {[0, 1, 2].map((copy) => (
+        <div className="hero-strip__track" key={copy}>
+          {STRIP.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function HeroStats() {
+  return (
+    <ul className="hero-stats">
+      <li><b>24/7</b><span>ספורט וליין חי</span></li>
+      <li><b>3</b><span>עולמות משחק</span></li>
+      <li><b>6</b><span>משחקי דמו בחינם</span></li>
+    </ul>
+  );
+}
+
+export function SeoBlock() {
+  return (
+    <section className="seo" id="about">
+      <div className="seo__grid">
+        <h2 className="seo__title">סוכן {site.brand} בישראל: הימורי ספורט, קזינו אונליין ומכונות מזל</h2>
+        <article>
+          <h3>הימורי ספורט וליין חי</h3>
+          <p>ב-{site.brand} מהמרים על כדורגל, כדורסל, טניס וסייבר ספורט, לפני המשחק ובזמן אמת. הסוכן עוזר לפתוח חשבון ולהתחיל להמר על הליגות שאתם עוקבים אחריהן.</p>
+        </article>
+        <article>
+          <h3>קזינו חי אונליין</h3>
+          <p>רולטה, בלאק ג׳ק ובאקרה מול דילרים אמיתיים בשידור חי. נכנסים לשולחן מהנייד או מהמחשב, עם אותו חשבון ואותה יתרה.</p>
+        </article>
+        <article>
+          <h3>מכונות מזל וסלוטים</h3>
+          <p>מאות מכונות מזל, ג׳קפוטים ומשחקי טורבו כמו קראש ופלינקו. בעמוד הזה אפשר לנסות גרסאות דמו בחינם לפני שנכנסים למשחק המלא.</p>
+        </article>
+        <article>
+          <h3>למה להירשם דרך סוכן</h3>
+          <p>סוכן אישי פותח את החשבון, מלווה בהפקדות ובמשיכות ועונה על שאלות. איש קשר אחד במקום פניות לתמיכה כללית.</p>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+const LINK_GROUPS = [
+  {
+    title: "משחקי דמו",
+    links: [
+      { href: "#games", label: "גלגל המזל" },
+      { href: "#games", label: "מכונת מזל" },
+      { href: "#games", label: "קראש" },
+      { href: "#games", label: "פלינקו" },
+      { href: "#games", label: "פנדל" },
+      { href: "#games", label: "כרטיס גירוד" },
+    ],
+  },
+  {
+    title: "עולמות המשחק",
+    links: [
+      { href: "#worlds", label: "הימורי ספורט" },
+      { href: "#worlds", label: "קזינו חי" },
+      { href: "#worlds", label: "מכונות מזל" },
+      { href: "#about", label: "קזינו אונליין" },
+    ],
+  },
+  {
+    title: "מידע",
+    links: [
+      { href: "#how", label: "איך מצטרפים" },
+      { href: "#why", label: "למה סוכן" },
+      { href: "#faq", label: "שאלות נפוצות" },
+      { href: "#about", label: `על סוכן ${site.brand}` },
+    ],
+  },
+];
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
+      <nav aria-label="קישורים" className="site-links">
+        {LINK_GROUPS.map((group) => (
+          <div key={group.title}>
+            <h3>{group.title}</h3>
+            <ul>
+              {group.links.map((link) => (
+                <li key={link.label}><a href={link.href}>{link.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div>
+          <h3>{site.brand}</h3>
+          <ul>
+            <li><a href={site.platformUrl} rel="noopener noreferrer" target="_blank">כניסה לאתר {site.brand}</a></li>
+            <li><a href={site.platformUrl} rel="noopener noreferrer" target="_blank">הרשמה ופתיחת חשבון</a></li>
+          </ul>
+        </div>
+      </nav>
       <p className="site-footer__brand">
         <span dir="ltr">{site.brand}</span> · סוכן רשמי
       </p>
