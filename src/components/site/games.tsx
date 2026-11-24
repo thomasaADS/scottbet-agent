@@ -522,7 +522,7 @@ export function DemoGames() {
         <p className="games__eyebrow">משחקי דמו · בחינם</p>
         <h2 className="games__title">מנסים לפני שנכנסים</h2>
         <p className="games__lead">
-          שישה משחקים שרצים כאן בדפדפן עם מטבעות דמו בלבד. אין הרשמה, אין הפקדה ואין זכייה כספית. כשתרצו את הדבר האמיתי, הכול מחכה ב-{site.brand}.
+          שישה משחקים שרצים כאן בדפדפן עם מטבעות דמו בלבד. אין הרשמה, אין הפקדה ואין זכייה כספית. כשתרצו את הדבר האמיתי, הכל מחכה ב-scottbet.
         </p>
       </div>
       <ul className="games__grid">
@@ -565,7 +565,7 @@ export function DemoGames() {
             <footer className="dg-modal__foot">
               <span>מטבעות דמו בלבד, ללא ערך כספי.</span>
               <a className="dg-modal__real" href={site.platformUrl} rel="noopener noreferrer" target="_blank">
-                למשחק המלא ב-{site.brand}
+                למשחק המלא ב-scottbet
               </a>
             </footer>
           </div>
