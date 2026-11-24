@@ -1,3 +1,6 @@
 node_modules
 dist
 .DS_Store
+public/assets/world/
+src/components/scroll-scrub/
+src/scroll-scrub-scenes.ts

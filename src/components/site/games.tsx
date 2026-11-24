@@ -514,6 +514,10 @@ export function DemoGames() {
 
   return (
     <section className="games" id="games">
+      <video autoPlay className="games__film" loop muted playsInline poster="/assets/games/roulette-poster.jpg" preload="metadata">
+        <source media="(max-width: 720px)" src="/assets/games/roulette-mobile.mp4" type="video/mp4" />
+        <source src="/assets/games/roulette.mp4" type="video/mp4" />
+      </video>
       <div className="games__head">
         <p className="games__eyebrow">משחקי דמו · בחינם</p>
         <h2 className="games__title">מנסים לפני שנכנסים</h2>

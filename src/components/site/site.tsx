@@ -1,133 +1,204 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import type { ReactNode } from "react";
 
-import { agentLabel, site, whatsappUrl } from "@/site-config";
+import { site, whatsappUrl } from "@/site-config";
 
 const WHATSAPP_TEXT = `היי, הגעתי מהאתר ואני רוצה לפתוח חשבון ב-${site.brand}`;
+const primaryHref = whatsappUrl(WHATSAPP_TEXT) ?? site.platformUrl;
 
 /* ------------------------------------------------------------------ CTAs */
 
-export function EnterCta({ children, variant = "gold" }: { children: ReactNode; variant?: "gold" | "ruby" }) {
+export function PillCta({ children, tone = "yellow" }: { children: ReactNode; tone?: "yellow" | "white" }) {
   return (
-    <a className={`cta-enter cta-enter--${variant}`} href={site.platformUrl} rel="noopener noreferrer" target="_blank">
-      <span className="cta-enter__label">{children}</span>
-      <span aria-hidden="true" className="cta-enter__chip" />
-    </a>
-  );
-}
-
-export function WhatsappCta({ children }: { children: ReactNode }) {
-  const href = whatsappUrl(WHATSAPP_TEXT);
-  if (!href) return null;
-  return (
-    <a className="cta-whatsapp" href={href} rel="noopener noreferrer" target="_blank">
-      <span aria-hidden="true" className="cta-whatsapp__dot" />
+    <a className={`pill pill--${tone}`} href={primaryHref} rel="noopener noreferrer" target="_blank">
       {children}
     </a>
   );
 }
 
-export function TelegramCta({ children }: { children: ReactNode }) {
-  if (!site.telegramUrl) return null;
+export function EnterLink({ children }: { children: ReactNode }) {
   return (
-    <a className="cta-telegram" href={site.telegramUrl} rel="noopener noreferrer" target="_blank">
+    <a className="enter-link" href={site.platformUrl} rel="noopener noreferrer" target="_blank">
       {children}
     </a>
   );
 }
 
-export function GhostLink({ children, href }: { children: ReactNode; href: string }) {
-  return (
-    <a className="cta-ghost" href={href}>
-      {children}
-      <span aria-hidden="true" className="cta-ghost__arrow">←</span>
-    </a>
-  );
+function Logo({ height }: { height: number }) {
+  return <img alt={site.brand} className="logo" height={height} src="/assets/brand/logo.svg" width={Math.round(height * 5.51)} />;
 }
 
 /* ---------------------------------------------------------------- header */
 
-const NAV = [
-  { href: "#worlds", label: "עולמות המשחק" },
-  { href: "#how", label: "איך מצטרפים" },
-  { href: "#why", label: "למה סוכן" },
-  { href: "#faq", label: "שאלות" },
-  { href: "#games", label: "משחקי דמו" },
-];
-
 export function SiteHeader() {
-  const [solid, setSolid] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header className="site-header" data-solid={solid ? "true" : "false"}>
-      <a aria-label={`${site.brand}, לראש העמוד`} className="site-logo" href="#top">
-        <span className="site-logo__word" dir="ltr">scott<b>bet</b></span>
-        <span className="site-logo__tag">סוכן רשמי</span>
+    <header className="topbar">
+      <a aria-label={`${site.brand}, לראש העמוד`} className="topbar__logo" href="#top">
+        <Logo height={30} />
       </a>
-      <nav aria-label="ניווט ראשי" className="site-nav">
-        {NAV.map((item) => (
-          <a href={item.href} key={item.href}>{item.label}</a>
-        ))}
+      <nav aria-label="ניווט ראשי" className="topbar__nav">
+        <a href="#site-tour">האתר מבפנים</a>
+        <a href="#how">איך מצטרפים</a>
+        <a href="#faq">שאלות</a>
+        <a href="#games">משחקי דמו</a>
       </nav>
-      <a className="header-enter" href={site.platformUrl} rel="noopener noreferrer" target="_blank">
-        כניסה ל-{site.brand}
+      <a className="topbar__cta" href={primaryHref} rel="noopener noreferrer" target="_blank">
+        קבלו בונוס
       </a>
     </header>
   );
 }
 
-/* ---------------------------------------------------------------- worlds */
+/* ------------------------------------------------------------------ hero */
 
-const WORLDS = [
-  {
-    image: "/assets/cat/sport.jpg",
-    name: "ספורט וליין חי",
-    text: "כדורגל, כדורסל, טניס וסייבר ספורט, עם יחסים שמתעדכנים תוך כדי משחק.",
-    points: ["ליין חי", "שידורים", "סייבר ספורט"],
-  },
-  {
-    image: "/assets/cat/live.jpg",
-    name: "קזינו חי",
-    text: "רולטה, בלאק ג׳ק ובאקרה מול דילרים אמיתיים בשידור ישיר.",
-    points: ["רולטה", "בלאק ג׳ק", "באקרה"],
-  },
-  {
-    image: "/assets/cat/slots.jpg",
-    name: "מכונות מזל",
-    text: "מאות סלוטים מהספקים המובילים, מהקלאסיקות ועד ג׳קפוטים.",
-    points: ["סלוטים", "ג׳קפוטים", "משחקי טורבו"],
-  },
+export function Hero() {
+  return (
+    <section className="hero" id="top">
+      <video
+        autoPlay
+        className="hero__video"
+        loop
+        muted
+        playsInline
+        poster="/assets/hero/hero-bg.webp"
+        preload="metadata"
+      >
+        <source media="(max-width: 720px)" src="/assets/hero/hero-mobile.mp4" type="video/mp4" />
+        <source src="/assets/hero/hero.mp4" type="video/mp4" />
+      </video>
+      <div className="hero__inner">
+        <p className="hero__badge">הסוכן הרשמי של {site.brand} · ליווי אישי</p>
+        <h1 className="hero__title">100% בונוס על ההפקדה הראשונה</h1>
+        <p className="hero__sub">ועד 20% החזר חודשי על הפסדים</p>
+        <PillCta>קבלו 100% בונוס</PillCta>
+        <p className="hero__terms">ההטבות בכפוף לתקנון האתר · 18+</p>
+        <a aria-label="להמשך העמוד" className="hero__down" href="#site-tour">
+          <span aria-hidden="true">⌄</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------- site tour */
+
+const TOUR = [
+  { image: "/assets/site/site-live-casino.webp", caption: "כל המשחקים החיים במסך אחד" },
+  { image: "/assets/site/site-live-match.webp", caption: "שידור חי ויחסים על אותו מסך" },
+  { image: "/assets/site/site-slots.webp", caption: "סלוטים של הספקים הגדולים" },
+  { image: "/assets/site/site-live-pitch.webp", caption: "רואים את כל המגרש, בלייב" },
+  { image: "/assets/site/site-live-odds.webp", caption: "יחסים שמתעדכנים בזמן אמת" },
+  { image: "/assets/site/site-home.webp", caption: "הכול מתחיל מעמוד אחד" },
 ];
 
-export function Worlds() {
+export function SiteTour() {
+  const rail = useRef<HTMLDivElement | null>(null);
+
+  const move = (direction: 1 | -1) => {
+    const element = rail.current;
+    if (!element) return;
+    element.scrollBy({ behavior: "smooth", left: direction * element.clientWidth * 0.7 });
+  };
+
   return (
-    <section className="worlds" id="worlds">
-      <h2 className="worlds__title">שלושה עולמות, חשבון אחד</h2>
-      <div className="worlds__rail">
-        {WORLDS.map((world, index) => (
-          <article className="world" data-tilt={index % 2 === 0 ? "a" : "b"} key={world.name}>
-            <img alt="" className="world__img" height={900} loading="lazy" src={world.image} width={1200} />
-            <div className="world__body">
-              <h3 className="world__name">{world.name}</h3>
-              <p className="world__text">{world.text}</p>
-              <ul className="world__points">
-                {world.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-            </div>
-          </article>
-        ))}
+    <section className="tour" id="site-tour">
+      <h2 className="tour__title">ככה זה נראה מבפנים</h2>
+      <p className="tour__lead">
+        שידורי כדורגל וכדורסל חיים בתוך האתר, יחסים שמתעדכנים בכל התקפה, קזינו וסלוטים. הכול מהנייד, בלי אפליקציה. אלה צילומי מסך אמיתיים מהאתר.
+      </p>
+      <div className="tour__frame">
+        <button aria-label="הקודם" className="tour__arrow tour__arrow--prev" onClick={() => move(1)} type="button">›</button>
+        <div className="tour__rail" dir="ltr" ref={rail}>
+          {TOUR.map((item) => (
+            <figure className="phone" key={item.image}>
+              <img alt={item.caption} height={640} loading="lazy" src={item.image} width={320} />
+              <figcaption dir="rtl">{item.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <button aria-label="הבא" className="tour__arrow tour__arrow--next" onClick={() => move(-1)} type="button">‹</button>
       </div>
-      <div className="worlds__cta">
-        <EnterCta>לכל המשחקים ב-{site.brand}</EnterCta>
+      <div className="tour__cta">
+        <PillCta>הכנסו עכשיו</PillCta>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------------------------------------- about */
+
+const STATS = [
+  { value: "+8", label: "שנים בתחום" },
+  { value: "24/7", label: "ליווי ותמיכה" },
+  { value: "100%", label: "מותאם לנייד" },
+  { value: "6", label: "משחקי דמו בחינם" },
+];
+
+export function About() {
+  return (
+    <section className="about" id="about-brand">
+      <h2 className="about__title">+8 שנים בתחום. סוכן אחד שמלווה אתכם.</h2>
+      <p className="about__lead">
+        {site.brand} פועל יותר מ-8 שנים עבור שחקנים בישראל. דרך הסוכן אתם מקבלים חשבון אישי, איש קשר אחד לכל שאלה, וליווי בהפקדות ובמשיכות מהיום הראשון.
+      </p>
+      <ul className="about__stats">
+        {STATS.map((stat) => (
+          <li key={stat.label}>
+            <b dir="ltr">{stat.value}</b>
+            <span>{stat.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------------- compare */
+
+const COMPARE = [
+  { alone: "מחכים לתשובה מתמיכה כללית", agent: "איש קשר אחד שמכיר אתכם" },
+  { alone: "פותחים חשבון לבד מול טפסים", agent: "הסוכן פותח ומגדיר את החשבון איתכם" },
+  { alone: "לא ברור איזה בונוס מגיע", agent: "100% בונוס הצטרפות, מוסבר מראש" },
+  { alone: "הפסדתם? זה נגמר שם", agent: "עד 20% החזר חודשי על הפסדים" },
+  { alone: "משיכה בלי מי שילווה", agent: "כל הפקדה ומשיכה מלווה מול בן אדם" },
+];
+
+const PERKS = [
+  { title: "+8 שנים", text: "פעילות רציפה בתחום" },
+  { title: "ליווי אישי", text: "סוכן אחד מההתחלה" },
+  { title: "24/7", text: "מענה בכל שעה" },
+  { title: "דיסקרטיות", text: "בלי דיוורים ושיחות מכירה" },
+];
+
+export function Compare() {
+  return (
+    <section className="compare" id="why">
+      <h2 className="compare__title">ההבדל מורגש ברגע שזוכים</h2>
+      <p className="compare__lead">ההפקדה קלה בכל מקום. המבחן האמיתי הוא הליווי. ככה זה נראה לבד, וככה זה נראה עם סוכן.</p>
+      <ul className="compare__rows">
+        {COMPARE.map((row) => (
+          <li className="compare__row" key={row.agent}>
+            <div className="compare__cell compare__cell--alone">
+              <small>לבד מול אתר</small>
+              <span>{row.alone}</span>
+            </div>
+            <div className="compare__cell compare__cell--agent">
+              <small>עם סוכן {site.brand}</small>
+              <span>{row.agent}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <ul className="compare__perks">
+        {PERKS.map((perk) => (
+          <li key={perk.title}>
+            <b>{perk.title}</b>
+            <span>{perk.text}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="compare__cta">
+        <PillCta>הכנסו עכשיו</PillCta>
       </div>
     </section>
   );
@@ -138,21 +209,14 @@ export function Worlds() {
 const STEPS = [
   { title: "פונים לסוכן", text: "הודעה קצרה או כניסה ישירה לאתר. עונה לכם בן אדם, לא בוט." },
   { title: "פותחים חשבון", text: `הסוכן פותח לכם חשבון אישי ב-${site.brand} ומוודא שהכול מוגדר נכון.` },
-  { title: "מפקידים", text: "בוחרים יחד את דרך ההפקדה שנוחה לכם ומקבלים אישור ברגע שהיא נקלטת." },
-  { title: "משחקים ומושכים", text: "ספורט, קזינו חי וסלוטים. כשרוצים למשוך, סוגרים את זה ישירות מול הסוכן." },
+  { title: "מפקידים ומקבלים בונוס", text: "בוחרים יחד את דרך ההפקדה שנוחה לכם, וההטבה נטענת לפי התקנון." },
+  { title: "משחקים ומושכים", text: "ספורט, קזינו חי וסלוטים. כשרוצים למשוך, סוגרים את זה מול הסוכן." },
 ];
 
 export function Steps() {
   return (
     <section className="steps" id="how">
-      <div className="steps__intro">
-        <p className="steps__eyebrow">איך מצטרפים</p>
-        <h2 className="steps__title">ארבעה צעדים מההודעה הראשונה ועד המשחק</h2>
-        <div className="steps__cta">
-          <WhatsappCta>פתיחת חשבון בוואטסאפ</WhatsappCta>
-          <GhostLink href="#faq">יש לי שאלה קודם</GhostLink>
-        </div>
-      </div>
+      <h2 className="steps__title">ארבעה צעדים ואתם בפנים</h2>
       <ol className="steps__list">
         {STEPS.map((step, index) => (
           <li className="step" key={step.title}>
@@ -166,60 +230,43 @@ export function Steps() {
   );
 }
 
-/* ------------------------------------------------------------------- why */
-
-const REASONS = [
-  { title: "איש קשר אחד", text: "אותו סוכן מהיום הראשון. לא מסבירים הכול מחדש בכל פנייה." },
-  { title: "תשובות מבן אדם", text: "שאלה על הפקדה, משיכה או הימור: מקבלים תשובה ברורה, לא טיקט." },
-  { title: "דיסקרטיות", text: "התקשורת נשארת ביניכם לבין הסוכן. בלי דיוורים ובלי שיחות מכירה." },
-  { title: "סדר בכסף", text: "כל הפקדה ומשיכה מאושרת מולכם, כך שתמיד ברור מה מצב החשבון." },
-];
-
-export function Why() {
-  return (
-    <section className="why" id="why">
-      <h2 className="why__title">ההבדל בין אתר לבין {agentLabel}</h2>
-      <dl className="why__table">
-        {REASONS.map((reason) => (
-          <div className="why__row" key={reason.title}>
-            <dt>{reason.title}</dt>
-            <dd>{reason.text}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
-
 /* ------------------------------------------------------------------- faq */
 
 const FAQ = [
   {
+    q: "מה יש באתר?",
+    a: "הימורי ספורט וליין חי, שידורים חיים, קזינו חי מול דילרים אמיתיים, מאות סלוטים ומשחקי טורבו. הכול מאותו חשבון.",
+  },
+  {
+    q: "איך מקבלים את בונוס ההצטרפות?",
+    a: "נרשמים דרך הסוכן ומבצעים הפקדה ראשונה. הבונוס נטען לפי תנאי התקנון של האתר, והסוכן מסביר אותם לפני ההפקדה.",
+  },
+  {
+    q: "איך עובד ההחזר החודשי?",
+    a: "עד 20% מההפסדים נטו חוזרים ליתרה אחת לחודש, בכפוף לתקנון. הסוכן יעדכן אתכם בגובה ההחזר.",
+  },
+  {
     q: "מה ההבדל בין הרשמה דרך סוכן להרשמה רגילה?",
-    a: `החשבון הוא אותו חשבון ב-${site.brand}. ההבדל הוא שיש לכם איש קשר אישי שפותח את החשבון, מלווה בהפקדות ובמשיכות ועונה על שאלות.`,
+    a: `החשבון הוא אותו חשבון ב-${site.brand}. ההבדל הוא איש קשר אישי שפותח את החשבון, מלווה בהפקדות ובמשיכות ועונה על שאלות.`,
   },
   {
-    q: "האם משחקי הדמו באתר הזה משלמים כסף?",
-    a: "לא. משחקי הדמו כאן פועלים עם מטבעות דמו בלבד, אין להם ערך כספי ואי אפשר להפקיד או למשוך דרכם.",
+    q: "אילו אמצעי תשלום מקבלים?",
+    a: "כרטיסי אשראי, ביט, PayBox, מזומן וקריפטו. הסוכן יתאים לכם את הדרך הנוחה.",
   },
   {
-    q: "אילו בונוסים מקבלים?",
-    a: "המבצעים משתנים מעת לעת ותלויים בתקנון הפלטפורמה. את התנאים העדכניים מקבלים ישירות מהסוכן לפני ההפקדה.",
+    q: "האם משחקי הדמו כאן משלמים כסף?",
+    a: "לא. משחקי הדמו בעמוד הזה פועלים עם מטבעות דמו בלבד, ללא ערך כספי.",
   },
   {
-    q: "מי יכול להצטרף?",
-    a: "בגירים מגיל 18 ומעלה בלבד, ובכפוף לחוק החל במקום המגורים שלכם ולתקנון הפלטפורמה.",
-  },
-  {
-    q: "מה עושים אם ההימורים יוצאים משליטה?",
-    a: "עוצרים. קבעו מראש תקציב וזמן משחק, אל תרדפו אחרי הפסדים, ופנו לעזרה מקצועית אם קשה להפסיק. אפשר גם לבקש מהסוכן לסגור את החשבון.",
+    q: "האתר עובד טוב בנייד?",
+    a: "כן. האתר מותאם לנייד ואין צורך להתקין אפליקציה.",
   },
 ];
 
 export function Faq() {
   return (
     <section className="faq" id="faq">
-      <h2 className="faq__title">שאלות לפני שמתחילים</h2>
+      <h2 className="faq__title">שאלות נפוצות</h2>
       <div className="faq__list">
         {FAQ.map((item) => (
           <details className="faq__item" key={item.q}>
@@ -232,50 +279,7 @@ export function Faq() {
   );
 }
 
-/* ----------------------------------------------------------- final + foot */
-
-export function FinalCall() {
-  return (
-    <section className="final">
-      <img alt="" className="final__art" height={800} loading="lazy" src="/assets/brand/cover.jpg" width={1200} />
-      <div className="final__copy">
-        <h2 className="final__title">השולחן פתוח. מצטרפים?</h2>
-        <p className="final__text">פתיחת חשבון ב-{site.brand} עם ליווי אישי, מהצעד הראשון.</p>
-        <div className="final__actions">
-          <EnterCta variant="ruby">כניסה ל-{site.brand}</EnterCta>
-          <WhatsappCta>דברו עם הסוכן</WhatsappCta>
-          <TelegramCta>ערוץ הטלגרם</TelegramCta>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const STRIP = ["ספורט חי", "קזינו חי", "מכונות מזל", "רולטה", "בלאק ג׳ק", "פוקר", "קראש", "גלגל המזל", "ליווי אישי", "משחקי דמו בחינם"];
-
-export function HeroStrip() {
-  return (
-    <div aria-hidden="true" className="hero-strip">
-      {[0, 1, 2].map((copy) => (
-        <div className="hero-strip__track" key={copy}>
-          {STRIP.map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export function HeroStats() {
-  return (
-    <ul className="hero-stats">
-      <li><b>24/7</b><span>ספורט וליין חי</span></li>
-      <li><b>3</b><span>עולמות משחק</span></li>
-      <li><b>6</b><span>משחקי דמו בחינם</span></li>
-    </ul>
-  );
-}
+/* ------------------------------------------------------------------- seo */
 
 export function SeoBlock() {
   return (
@@ -284,7 +288,7 @@ export function SeoBlock() {
         <h2 className="seo__title">סוכן {site.brand} בישראל: הימורי ספורט, קזינו אונליין ומכונות מזל</h2>
         <article>
           <h3>הימורי ספורט וליין חי</h3>
-          <p>ב-{site.brand} מהמרים על כדורגל, כדורסל, טניס וסייבר ספורט, לפני המשחק ובזמן אמת. הסוכן עוזר לפתוח חשבון ולהתחיל להמר על הליגות שאתם עוקבים אחריהן.</p>
+          <p>ב-{site.brand} מהמרים על כדורגל, כדורסל, טניס וסייבר ספורט, לפני המשחק ובזמן אמת, עם שידורים חיים בתוך האתר.</p>
         </article>
         <article>
           <h3>קזינו חי אונליין</h3>
@@ -292,7 +296,7 @@ export function SeoBlock() {
         </article>
         <article>
           <h3>מכונות מזל וסלוטים</h3>
-          <p>מאות מכונות מזל, ג׳קפוטים ומשחקי טורבו כמו קראש ופלינקו. בעמוד הזה אפשר לנסות גרסאות דמו בחינם לפני שנכנסים למשחק המלא.</p>
+          <p>מאות מכונות מזל, ג׳קפוטים ומשחקי טורבו כמו קראש ופלינקו. בעמוד הזה אפשר לנסות גרסאות דמו בחינם לפני המשחק המלא.</p>
         </article>
         <article>
           <h3>למה להירשם דרך סוכן</h3>
@@ -302,6 +306,47 @@ export function SeoBlock() {
     </section>
   );
 }
+
+/* ---------------------------------------------------------------- signup */
+
+const PAY = [
+  { image: "/assets/pay/visa.svg", label: "Visa" },
+  { image: "/assets/pay/mastercard.svg", label: "Mastercard" },
+  { image: "/assets/pay/americanexpress.svg", label: "American Express" },
+  { text: "bit", tone: "bit", label: "ביט" },
+  { text: "PayBox", tone: "paybox", label: "PayBox" },
+  { text: "₪", tone: "cash", label: "מזומן", caption: "מזומן" },
+  { image: "/assets/pay/bitcoin.svg", label: "קריפטו", caption: "קריפטו" },
+];
+
+export function Signup() {
+  const whatsapp = whatsappUrl(WHATSAPP_TEXT);
+  return (
+    <section className="signup" id="signup">
+      <h2 className="signup__title">קבלו את ההטבה</h2>
+      <p className="signup__lead">100% בונוס על ההפקדה הראשונה ועד 20% החזר חודשי על הפסדים. לוחצים, האתר נפתח בחלון חדש ומשלימים שם את ההרשמה.</p>
+      <div className="signup__card">
+        <PillCta>קבלו 100% בונוס</PillCta>
+        {whatsapp ? <EnterLink>או כניסה ישירה לאתר {site.brand}</EnterLink> : null}
+        {site.telegramUrl ? (
+          <a className="enter-link" href={site.telegramUrl} rel="noopener noreferrer" target="_blank">ערוץ הטלגרם</a>
+        ) : null}
+        <p className="signup__note">ההטבות בכפוף לתקנון האתר. 18+ בלבד.</p>
+      </div>
+      <h3 className="signup__paytitle">אמצעי תשלום להפקדה ולמשיכה</h3>
+      <ul className="signup__pay">
+        {PAY.map((item) => (
+          <li key={item.label} title={item.label}>
+            {item.image ? <img alt={item.label} height={28} loading="lazy" src={item.image} width={56} /> : <b data-tone={item.tone}>{item.text}</b>}
+            {item.caption ? <small>{item.caption}</small> : null}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/* ---------------------------------------------------------------- footer */
 
 const LINK_GROUPS = [
   {
@@ -316,11 +361,11 @@ const LINK_GROUPS = [
     ],
   },
   {
-    title: "עולמות המשחק",
+    title: "באתר",
     links: [
-      { href: "#worlds", label: "הימורי ספורט" },
-      { href: "#worlds", label: "קזינו חי" },
-      { href: "#worlds", label: "מכונות מזל" },
+      { href: "#site-tour", label: "הימורי ספורט" },
+      { href: "#site-tour", label: "קזינו חי" },
+      { href: "#site-tour", label: "מכונות מזל" },
       { href: "#about", label: "קזינו אונליין" },
     ],
   },
@@ -330,15 +375,15 @@ const LINK_GROUPS = [
       { href: "#how", label: "איך מצטרפים" },
       { href: "#why", label: "למה סוכן" },
       { href: "#faq", label: "שאלות נפוצות" },
-      { href: "#about", label: `על סוכן ${site.brand}` },
+      { href: "#signup", label: "בונוס הצטרפות" },
     ],
   },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
-      <nav aria-label="קישורים" className="site-links">
+    <footer className="footer">
+      <nav aria-label="קישורים" className="footer__links">
         {LINK_GROUPS.map((group) => (
           <div key={group.title}>
             <h3>{group.title}</h3>
@@ -350,37 +395,26 @@ export function SiteFooter() {
           </div>
         ))}
         <div>
-          <h3>{site.brand}</h3>
+          <h3 dir="ltr">{site.brand}</h3>
           <ul>
             <li><a href={site.platformUrl} rel="noopener noreferrer" target="_blank">כניסה לאתר {site.brand}</a></li>
             <li><a href={site.platformUrl} rel="noopener noreferrer" target="_blank">הרשמה ופתיחת חשבון</a></li>
           </ul>
         </div>
       </nav>
-      <p className="site-footer__brand">
-        <span dir="ltr">{site.brand}</span> · סוכן רשמי
-      </p>
-      <p className="site-footer__legal">
-        18+ בלבד. הימורים עלולים לגרום להתמכרות, שחקו באחריות. האתר הוא אתר סוכן ואינו מפעיל משחקים בכסף אמיתי. משחקי הדמו בעמוד זה הם להמחשה בלבד. השימוש בפלטפורמה כפוף לתקנון שלה ולחוק החל במקום מגוריכם.
+      <Logo height={34} />
+      <p className="footer__legal">
+        <b>18+</b> · הימרו באחריות. ההימורים מיועדים לבגירים בלבד וכרוכים בסיכון כספי. ההטבות כפופות לתקנון האתר. האתר הוא אתר סוכן, ומשחקי הדמו בעמוד זה הם להמחשה בלבד, ללא כסף אמיתי.
       </p>
     </footer>
   );
 }
 
-export function StickyBar() {
+export function ChatPill() {
   const whatsapp = whatsappUrl(WHATSAPP_TEXT);
   return (
-    <div className="sticky-bar">
-      <a className="sticky-bar__enter" href={site.platformUrl} rel="noopener noreferrer" target="_blank">
-        כניסה ל-{site.brand}
-      </a>
-      {whatsapp ? (
-        <a className="sticky-bar__chat" href={whatsapp} rel="noopener noreferrer" target="_blank">
-          וואטסאפ
-        </a>
-      ) : (
-        <a className="sticky-bar__demo" href="#games">משחקי דמו</a>
-      )}
-    </div>
+    <a className="chat-pill" href={whatsapp ?? "#faq"} {...(whatsapp ? { rel: "noopener noreferrer", target: "_blank" } : {})}>
+      {whatsapp ? "וואטסאפ לסוכן 24/7" : "שאלות ותמיכה 24/7"}
+    </a>
   );
 }
