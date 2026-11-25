@@ -100,7 +100,7 @@ function Hero() {
         <p className="hero-kicker">אתר אירופאי · נוסד בלונדון ב-2018 · בלי סוכנים</p>
         <h1 className="hero-headline">100% בונוס על ההפקדה הראשונה</h1>
         <p className="hero-promise">ועד 20% החזר חודשי על הפסדים</p>
-        <a className="cta-btn" href={SIGNUP}>להרשמה לאתר</a>
+        <a className="cta-btn" href={SIGNUP}>הירשמו לפלטפורמה</a>
       </div>
       <a aria-label="גללו למטה" className="scroll-arrow" href="#site-tour">
         <svg aria-hidden="true" className="size-full" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -127,14 +127,20 @@ function SiteTour() {
       <div className="max-w-6xl mx-auto flex flex-col gap-10">
         {TESTIMONIALS.length > 0 ? (
           <div className="flex flex-col gap-8">
-            <h2 className="section-title text-center" id="site-tour-title">מה אומרים עלינו</h2>
+            <div className="text-center flex flex-col gap-4">
+              <h2 className="section-title" id="site-tour-title">השחקנים שלנו מספרים</h2>
+              <p className="section-lead">בלי תסריט ובלי פילטרים. ככה נשמעת חוויה של מי שמשחק אצלנו.</p>
+            </div>
             <ul className="testimonials">
               {TESTIMONIALS.map((item) => (
                 <li key={`${item.name}-${item.city}`}>
                   <blockquote>{item.text}</blockquote>
                   <footer>
-                    <b>{item.name}, {item.age}</b>
-                    <span>{item.city}</span>
+                    <span aria-hidden="true" className="testimonials__avatar">{item.name.charAt(0)}</span>
+                    <span className="testimonials__who">
+                      <b>{item.name}, {item.age}</b>
+                      <span>{item.city}</span>
+                    </span>
                   </footer>
                 </li>
               ))}
