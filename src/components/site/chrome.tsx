@@ -1,14 +1,14 @@
 import { SEO_PAGES } from "@/seo/pages";
+import { site } from "@/site-config";
 
 /** Top bar. On sub-pages the links point back to the home page sections. */
 export function Nav({ home }: { home: boolean }) {
-  const signup = home ? "#signup" : "/#signup";
   return (
     <nav>
       <a aria-label="scottbet, עמוד הבית" href={home ? "#top" : "/"}>
         <img alt="scottbet" className="h-7 md:h-9 w-auto" height={36} src="/images/brand-logo.svg" width={198} />
       </a>
-      <a className="nav-cta" href={signup}>לפרטים נוספים</a>
+      <a className="nav-cta" href={site.platformUrl} rel="noopener" target="_blank">לפרטים נוספים</a>
     </nav>
   );
 }
