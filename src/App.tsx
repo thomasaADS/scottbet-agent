@@ -9,7 +9,7 @@ import { HOME_FAQ, findPage } from "@/seo/pages";
 import "@/ref.css";
 import "@/components/site/games.css";
 import "@/components/site/pages.css";
-import { site } from "@/site-config";
+import { site, whatsappUrl } from "@/site-config";
 
 const SIGNUP = "#signup";
 const SIGNED_KEY = "scottbet:signed-up";
@@ -100,7 +100,7 @@ function Hero() {
         <p className="hero-kicker">אתר אירופאי · נוסד בלונדון ב-2018 · בלי סוכנים</p>
         <h1 className="hero-headline">100% בונוס על ההפקדה הראשונה</h1>
         <p className="hero-promise">ועד 20% החזר חודשי על הפסדים</p>
-        <a className="cta-btn" href={SIGNUP}>הירשמו לפלטפורמה</a>
+        <a className="cta-btn" href={SIGNUP}>הירשמו לאתר</a>
       </div>
       <a aria-label="גללו למטה" className="scroll-arrow" href="#site-tour">
         <svg aria-hidden="true" className="size-full" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -407,7 +407,7 @@ function Home() {
         <Faq />
         <DemoGames />
         <Signup />
-        <a className={`support-btn ${heroVisible ? "invisible opacity-0" : ""}`} href="#faq">צ'אט תמיכה 24/7</a>
+        <a className={`support-btn ${heroVisible ? "invisible opacity-0" : ""}`} href={whatsappUrl} rel="noopener" target="_blank">וואטסאפ תמיכה 24/7</a>
       </main>
       <SiteFooter home />
     </>
