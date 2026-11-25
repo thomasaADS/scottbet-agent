@@ -8,7 +8,7 @@ export function Nav({ home }: { home: boolean }) {
       <a aria-label="scottbet, עמוד הבית" href={home ? "#top" : "/"}>
         <img alt="scottbet" className="h-7 md:h-9 w-auto" height={36} src="/images/brand-logo.svg" width={198} />
       </a>
-      <a className="nav-cta" href={site.platformUrl} rel="noopener" target="_blank">לפרטים נוספים</a>
+      <a className="nav-cta" href={site.platformUrl} rel="noopener" target="_blank">לאתר</a>
     </nav>
   );
 }
