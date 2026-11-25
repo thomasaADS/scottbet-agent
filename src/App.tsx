@@ -11,7 +11,6 @@ import "@/components/site/games.css";
 import "@/components/site/pages.css";
 import { site } from "@/site-config";
 
-const YEARS = 8;
 const SIGNUP = "#signup";
 const SIGNED_KEY = "scottbet:signed-up";
 const TRACKING = /^(utm_\w+|gclid|fbclid|ttclid)$/;
@@ -39,9 +38,9 @@ const TOUR = [
 ];
 
 const STATS = [
-  { value: `${YEARS}+`, label: "שנים בתחום" },
+  { value: "2018", label: "נוסד בלונדון" },
   { value: "24/7", label: "תמיכה בתוך האתר" },
-  { value: "100%", label: "מותאם לנייד" },
+  { value: "3", label: "יבשות: אירופה, אסיה והמזרח התיכון" },
   { value: "0", label: "סוכנים" },
 ];
 
@@ -53,7 +52,7 @@ const PAYOUT_POINTS = [
 ];
 
 const BADGES = [
-  { title: `${YEARS}+ שנים`, text: "פעילות רציפה בתחום" },
+  { title: "אתר אירופאי", text: "נוסד בלונדון, פעיל מאז 2018" },
   { title: "תשלום מיידי", text: "הזכיות ישירות אליכם" },
   { title: "תמיכה 24/7", text: "צ'אט בתוך האתר" },
   { title: "בלי סוכנים", text: "אתם בשליטה מלאה" },
@@ -98,7 +97,7 @@ function Hero() {
     <section className="hero-section" id="top">
       <video aria-hidden="true" className="hero-video" loop muted playsInline poster="/images/hero-bg.webp" preload="none" ref={video} />
       <div className="hero-content">
-        <p className="hero-kicker">הבית של הספורט הישראלי · בלי סוכנים</p>
+        <p className="hero-kicker">אתר אירופאי · נוסד בלונדון ב-2018 · בלי סוכנים</p>
         <h1 className="hero-headline">100% בונוס על ההפקדה הראשונה</h1>
         <p className="hero-promise">ועד 20% החזר חודשי על הפסדים</p>
         <a className="cta-btn" href={SIGNUP}>להרשמה לאתר</a>
