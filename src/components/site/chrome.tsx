@@ -8,7 +8,7 @@ export function Nav({ home }: { home: boolean }) {
       <a aria-label="scottbet, עמוד הבית" href={home ? "#top" : "/"}>
         <img alt="scottbet" className="h-7 md:h-9 w-auto" height={36} src="/images/brand-logo.svg" width={198} />
       </a>
-      <a className="nav-cta" href={signup}>קבלו בונוס</a>
+      <a className="nav-cta" href={signup}>פרטים נוספים</a>
     </nav>
   );
 }
@@ -28,6 +28,9 @@ export function SiteFooter({ home }: { home: boolean }) {
       <img alt="scottbet" className="h-8 w-auto" height={32} loading="lazy" src="/images/brand-logo.svg" width={176} />
       <p>
         <b>18+</b> · הימרו באחריות. ההימורים מיועדים לבגירים בלבד וכרוכים בסיכון כספי. ההטבות כפופות לתקנון האתר.
+      </p>
+      <p className="footer-legal" dir="ltr" lang="en">
+        © 2018–{new Date().getFullYear()} Scottbet. All rights reserved. Scottbet is intended for persons aged 18 and over. Gambling involves financial risk and can be addictive; please play responsibly and only with money you can afford to lose. All bonuses and promotions are subject to the site's Terms &amp; Conditions.
       </p>
     </footer>
   );

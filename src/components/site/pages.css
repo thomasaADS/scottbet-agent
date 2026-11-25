@@ -180,3 +180,121 @@
 .seo-body {
   grid-template-columns: minmax(0, 1fr);
 }
+
+/* ---- payouts, testimonials and legal footer ---- */
+.payout-points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.payout-points li {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 1rem;
+  background: #3470d8;
+  color: #fff;
+}
+
+.payout-points b {
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+}
+
+.payout-points span {
+  opacity: 0.92;
+  line-height: 1.55;
+}
+
+.payout-proofs-title {
+  text-align: center;
+  font-family: "Rubik", "Heebo", sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.payout-proofs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+
+.payout-proofs li {
+  overflow: hidden;
+  border: 1px solid #e2e5ea;
+  border-radius: 1rem;
+  background: #f4f5f7;
+}
+
+.payout-proofs img {
+  width: 100%;
+  height: auto;
+}
+
+.payout-proofs p {
+  padding: 0.6rem 0.8rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.9rem;
+}
+
+.testimonials li {
+  display: grid;
+  gap: 1rem;
+  align-content: space-between;
+  padding: 1.4rem;
+  border: 2px solid #2c2c2c;
+  border-radius: 1.2rem;
+  background: #0a0a0a;
+  color: #fff;
+  text-align: start;
+}
+
+.testimonials blockquote {
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.testimonials blockquote::before {
+  display: block;
+  height: 1.6rem;
+  color: #ffd84a;
+  content: "\\201D";
+  font-family: "Rubik", sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.testimonials footer {
+  display: grid;
+}
+
+.testimonials footer b {
+  color: #ffd84a;
+}
+
+.testimonials footer span {
+  color: #b8bcc6;
+  font-size: 0.9rem;
+}
+
+.footer-legal {
+  max-width: 52rem;
+  margin-inline: auto;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  opacity: 0.6;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .payout-points { grid-template-columns: minmax(0, 1fr); }
+}

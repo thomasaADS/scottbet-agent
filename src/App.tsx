@@ -3,6 +3,7 @@ import type { FormEvent } from "react";
 
 import { Nav, SiteFooter } from "@/components/site/chrome";
 import { DemoGames } from "@/components/site/games";
+import { PAYOUT_PROOFS, TESTIMONIALS } from "@/content/social-proof";
 import { ArticlePage } from "@/Page";
 import { HOME_FAQ, findPage } from "@/seo/pages";
 import "@/ref.css";
@@ -44,12 +45,11 @@ const STATS = [
   { value: "0", label: "סוכנים" },
 ];
 
-const COMPARE = [
-  { them: "המשיכה תלויה בסוכן", us: "תשלום זכיות מיידי, ישירות מהחשבון" },
-  { them: "זמין רק כשהסוכן עונה", us: "תמיכה 24/7 בצ'אט בתוך האתר" },
-  { them: "בונוס לפי מצב הרוח", us: "100% בונוס הצטרפות, קבוע ושקוף" },
-  { them: "הפסדתם? זה נגמר שם", us: "עד 20% החזר חודשי על הפסדים" },
-  { them: "אין תיעוד, יש רק מילה", us: "כל הפקדה ומשיכה מתועדות בחשבון" },
+const PAYOUT_POINTS = [
+  { title: "משיכה ישירות מהחשבון", text: "מבצעים אותה לבד, בכל שעה, בלי לחכות לאישור של אף אחד." },
+  { title: "הכסף אצלכם מיד", text: "תשלום הזכיות מיידי לאחר המשיכה, באותו אמצעי שבו הפקדתם." },
+  { title: "הכל מתועד", text: "כל הפקדה, הימור ומשיכה רשומים בחשבון האישי שלכם." },
+  { title: "תמיכה 24/7", text: "צוות דובר עברית זמין בצ'אט בתוך האתר, מסביב לשעון." },
 ];
 
 const BADGES = [
@@ -101,7 +101,7 @@ function Hero() {
         <p className="hero-kicker">הבית של הספורט הישראלי · בלי סוכנים</p>
         <h1 className="hero-headline">100% בונוס על ההפקדה הראשונה</h1>
         <p className="hero-promise">ועד 20% החזר חודשי על הפסדים</p>
-        <a className="cta-btn" href={SIGNUP}>קבלו 100% בונוס</a>
+        <a className="cta-btn" href={SIGNUP}>להרשמה לאתר</a>
       </div>
       <a aria-label="גללו למטה" className="scroll-arrow" href="#site-tour">
         <svg aria-hidden="true" className="size-full" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -126,12 +126,26 @@ function SiteTour() {
   return (
     <section aria-labelledby="site-tour-title" className="site-tour" id="site-tour">
       <div className="max-w-6xl mx-auto flex flex-col gap-10">
-        <div className="text-center flex flex-col gap-4">
-          <h2 className="section-title" id="site-tour-title">ככה זה נראה מבפנים</h2>
-          <p className="section-lead">
-            שידורי כדורגל וכדורסל חיים בתוך האתר, יחסים שמתעדכנים בכל התקפה, קזינו וסלוטים. הכל מהנייד, בלי אפליקציה. אלה צילומי מסך אמיתיים מהאתר.
-          </p>
-        </div>
+        {TESTIMONIALS.length > 0 ? (
+          <div className="flex flex-col gap-8">
+            <h2 className="section-title text-center" id="site-tour-title">מה אומרים עלינו</h2>
+            <ul className="testimonials">
+              {TESTIMONIALS.map((item) => (
+                <li key={`${item.name}-${item.city}`}>
+                  <blockquote>{item.text}</blockquote>
+                  <footer>
+                    <b>{item.name}, {item.age}</b>
+                    <span>{item.city}</span>
+                  </footer>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="text-center flex flex-col gap-4">
+            <h2 className="section-title" id="site-tour-title">ככה זה נראה מבפנים</h2>
+          </div>
+        )}
         <div className="relative">
           <ul className="tour-track" ref={track}>
             {TOUR.map((item) => (
@@ -161,9 +175,9 @@ function About() {
     <section aria-labelledby="about-title" className="about">
       <div className="max-w-5xl mx-auto flex flex-col gap-10">
         <div className="text-center flex flex-col gap-4">
-          <h2 className="section-title" id="about-title">{YEARS}+ שנים בתחום. אותו צוות, אותו עיקרון.</h2>
+          <h2 className="section-title" id="about-title">אתר אירופאי שנותן גישה לקהל הישראלי</h2>
           <p className="section-lead">
-            scottbet פועל יותר מ-{YEARS} שנים עבור שחקנים בישראל. בנינו את האתר כדי להחליף את שיטת הסוכנים: חשבון אישי שמנוהל ישירות מולכם, כסף שזמין לכם בכל רגע, וצוות דובר עברית שזמין בתוך האתר מסביב לשעון.
+            <span dir="ltr">Scottbet</span> נוסד בשנת 2018 בלונדון, ובשנת 2021 פתח את שעריו לשוק הישראלי. היום האתר משרת לקוחות ממגוון רחב של שווקים באירופה, באסיה ובמזרח התיכון. ההצלחה לא איחרה לבוא, בזכות ניהול קפדני של צוות מנהלים, אנשי טכנולוגיה ונותני שירות לקוחות נאמנים.
           </p>
         </div>
         <ul className="about-stats">
@@ -184,23 +198,30 @@ function WhyUs() {
     <section aria-labelledby="why-us-title" className="why-us">
       <div className="max-w-5xl mx-auto flex flex-col gap-10">
         <div className="text-center flex flex-col gap-4">
-          <h2 className="section-title" id="why-us-title">ההבדל מורגש ברגע שזוכים</h2>
-          <p className="section-lead">ההפקדה קלה בכל מקום. המבחן האמיתי הוא המשיכה. ככה זה נראה אצל סוכן, וככה זה נראה אצלנו.</p>
+          <h2 className="section-title" id="why-us-title">תשלום זכיות מיידי לאחר המשיכה</h2>
+          <p className="section-lead">ההפקדה קלה בכל מקום. המבחן האמיתי הוא הרגע שבו רוצים את הכסף. אצלנו הוא מגיע מיד.</p>
         </div>
-        <ul className="compare">
-          {COMPARE.map((row) => (
-            <li key={row.us}>
-              <div className="compare-them">
-                <span className="compare-label">אתר עם סוכן</span>
-                <span>{row.them}</span>
-              </div>
-              <div className="compare-us">
-                <span className="compare-label">scottbet</span>
-                <span>{row.us}</span>
-              </div>
+        <ul className="payout-points">
+          {PAYOUT_POINTS.map((point) => (
+            <li key={point.title}>
+              <b>{point.title}</b>
+              <span>{point.text}</span>
             </li>
           ))}
         </ul>
+        {PAYOUT_PROOFS.length > 0 ? (
+          <div className="flex flex-col gap-5">
+            <h3 className="payout-proofs-title">זכיות ששולמו לאחרונה</h3>
+            <ul className="payout-proofs">
+              {PAYOUT_PROOFS.map((proof) => (
+                <li key={proof.image}>
+                  <img alt={proof.caption} loading="lazy" src={proof.image} />
+                  <p>{proof.caption}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         <ul className="trust-badges">
           {BADGES.map((badge) => (
             <li key={badge.title}>
@@ -348,14 +369,6 @@ function Signup() {
             <li aria-label="American Express" title="American Express"><img alt="" src="/images/pay/americanexpress.svg" /></li>
             <li aria-label="Bit" title="Bit"><span className="font-black bit-mark" dir="ltr">bit</span></li>
             <li aria-label="PayBox" title="PayBox"><span className="font-black paybox-mark" dir="ltr">PayBox</span></li>
-            <li aria-label="מזומן" title="מזומן">
-              <svg aria-hidden="true" className="cash-mark" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-                <rect height="12" rx="2" width="20" x="2" y="6" />
-                <circle cx="12" cy="12" r="2.5" />
-                <path d="M6 12h.01M18 12h.01" />
-              </svg>
-              <span className="text-black/70 text-sm font-bold">מזומן</span>
-            </li>
             <li aria-label="קריפטו" title="קריפטו">
               <img alt="" src="/images/pay/bitcoin.svg" />
               <span className="text-black/70 text-sm font-bold">קריפטו</span>

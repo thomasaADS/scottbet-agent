@@ -16,7 +16,7 @@ export function ArticlePage({ page }: { page: SeoPage }) {
           </div>
           <h1>{page.h1}</h1>
           <p>{page.lead}</p>
-          <a className="cta-btn" href="/#signup">קבלו 100% בונוס</a>
+          <a className="cta-btn" href="/#signup">להרשמה לאתר</a>
         </header>
 
         <article className="seo-body">
