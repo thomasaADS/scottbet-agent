@@ -1,4 +1,4 @@
-import { Nav, SiteFooter } from "@/components/site/chrome";
+import { Nav, SiteFooter, WhatsappFab } from "@/components/site/chrome";
 import { SEO_PAGES } from "@/seo/pages";
 import type { SeoPage } from "@/seo/pages";
 
@@ -73,6 +73,7 @@ export function ArticlePage({ page }: { page: SeoPage }) {
         </section>
       </main>
       <SiteFooter home={false} />
+      <WhatsappFab />
     </>
   );
 }

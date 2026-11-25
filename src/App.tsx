@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 
-import { Nav, SiteFooter } from "@/components/site/chrome";
+import { Nav, SiteFooter, WhatsappFab } from "@/components/site/chrome";
 import { DemoGames } from "@/components/site/games";
 import { PAYOUT_PROOFS, TESTIMONIALS } from "@/content/social-proof";
 import { ArticlePage } from "@/Page";
@@ -9,7 +9,7 @@ import { HOME_FAQ, findPage } from "@/seo/pages";
 import "@/ref.css";
 import "@/components/site/games.css";
 import "@/components/site/pages.css";
-import { site, whatsappUrl } from "@/site-config";
+import { site } from "@/site-config";
 
 const SIGNUP = "#signup";
 const SIGNED_KEY = "scottbet:signed-up";
@@ -386,16 +386,6 @@ function Signup() {
 }
 
 function Home() {
-  const [heroVisible, setHeroVisible] = useState(true);
-
-  useEffect(() => {
-    const hero = document.querySelector(".hero-section");
-    if (!hero) return undefined;
-    const observer = new IntersectionObserver(([entry]) => setHeroVisible(Boolean(entry?.isIntersecting)));
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       <Nav home />
@@ -407,9 +397,9 @@ function Home() {
         <Faq />
         <DemoGames />
         <Signup />
-        <a className={`support-btn ${heroVisible ? "invisible opacity-0" : ""}`} href={whatsappUrl} rel="noopener" target="_blank">וואטסאפ תמיכה 24/7</a>
       </main>
       <SiteFooter home />
+      <WhatsappFab />
     </>
   );
 }

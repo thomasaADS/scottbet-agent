@@ -352,3 +352,47 @@
 @media (max-width: 640px) {
   .payout-points { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---- floating WhatsApp button ---- */
+.wa-fab {
+  position: fixed;
+  z-index: 50;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 3.5rem;
+  padding: 0 1.1rem 0 0.9rem;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 10px 26px rgb(0 0 0 / 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+  animation: wa-pop 2.6s ease-in-out infinite;
+}
+
+.wa-fab:hover {
+  background: #1ebe5b;
+  transform: scale(1.06);
+}
+
+.wa-fab svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+@keyframes wa-pop {
+  0%, 100% { box-shadow: 0 10px 26px rgb(0 0 0 / 0.35), 0 0 0 0 rgb(37 211 102 / 0.55); }
+  60% { box-shadow: 0 10px 26px rgb(0 0 0 / 0.35), 0 0 0 14px rgb(37 211 102 / 0); }
+}
+
+@media (max-width: 560px) {
+  .wa-fab { width: 3.5rem; padding: 0; justify-content: center; }
+  .wa-fab span { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-fab { animation: none; }
+}
