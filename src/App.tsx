@@ -259,6 +259,12 @@ function Faq() {
   );
 }
 
+/** Sends a standard event to the Meta Pixel when it is loaded. */
+function trackPixel(event: string) {
+  const fbq = (window as unknown as { fbq?: (action: string, name: string) => void }).fbq;
+  if (typeof fbq === "function") fbq("track", event);
+}
+
 function validate(name: string, phone: string, ageConfirmed: boolean): string {
   if (name.trim().length < 2) return "נא להזין שם מלא";
   if (!/^\+?\d{9,15}$/.test(phone.replace(/[\s-]/g, ""))) return "מספר טלפון לא תקין";
@@ -310,6 +316,7 @@ function BonusForm() {
         tab.opener = null;
         tab.location.href = siteUrl();
       }
+      trackPixel("Lead");
       setOpened(Boolean(tab));
       setStatus("idle");
       setDone(true);
