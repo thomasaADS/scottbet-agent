@@ -5,6 +5,8 @@
 // With nothing configured the request is rejected so that leads are never
 // silently dropped.
 
+import { sendMetaEvent } from "./_lib/meta.js";
+
 function clean(value, max) {
   return String(value ?? "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
 }
@@ -63,6 +65,18 @@ export default async function handler(request, response) {
   if (!delivered) {
     console.error("Lead delivery failed for every destination");
     return response.status(502).json({ error: "שגיאה בשליחה, נסו שוב" });
+  }
+
+  // The lead reached a destination, so count it as a conversion server-side too.
+  const eventId = clean(body.eventId, 80);
+  if (/^[\w-]{6,80}$/.test(eventId)) {
+    await sendMetaEvent(request, {
+      name: "Lead",
+      eventId,
+      sourceUrl: `https://${String(request.headers.host ?? "")}/`,
+      phone: lead.phone,
+      firstName: lead.name.split(/\s+/)[0],
+    });
   }
 
   return response.status(200).json({ ok: true });

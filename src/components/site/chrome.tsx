@@ -1,5 +1,6 @@
 import { SEO_PAGES } from "@/seo/pages";
 import { site, whatsappUrl } from "@/site-config";
+import { newEventId, trackPixel, trackServer } from "@/track";
 
 /** Top bar. On sub-pages the links point back to the home page sections. */
 export function Nav({ home }: { home: boolean }) {
@@ -44,8 +45,9 @@ export function WhatsappFab() {
       className="wa-fab"
       href={whatsappUrl}
       onClick={() => {
-        const fbq = (window as unknown as { fbq?: (action: string, name: string) => void }).fbq;
-        if (typeof fbq === "function") fbq("track", "Contact");
+        const eventId = newEventId("contact");
+        trackPixel("Contact", eventId);
+        trackServer("Contact", eventId);
       }}
       rel="noopener"
       target="_blank"

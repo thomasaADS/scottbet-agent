@@ -20,7 +20,16 @@
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '2042535756411974');
-      fbq('track', 'PageView');
+      window.__pvId = 'pv_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+      fbq('track', 'PageView', {}, { eventID: window.__pvId });
+      try {
+        fetch('/api/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'PageView', eventId: window.__pvId, path: location.pathname + location.search }),
+          keepalive: true
+        });
+      } catch (e) {}
     </script>
     <!-- End Meta Pixel Code -->
   </head>

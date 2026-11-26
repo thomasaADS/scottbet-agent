@@ -10,6 +10,7 @@ import "@/ref.css";
 import "@/components/site/games.css";
 import "@/components/site/pages.css";
 import { site } from "@/site-config";
+import { newEventId, trackPixel } from "@/track";
 
 const SIGNUP = "#signup";
 const SIGNED_KEY = "scottbet:signed-up";
@@ -259,12 +260,6 @@ function Faq() {
   );
 }
 
-/** Sends a standard event to the Meta Pixel when it is loaded. */
-function trackPixel(event: string) {
-  const fbq = (window as unknown as { fbq?: (action: string, name: string) => void }).fbq;
-  if (typeof fbq === "function") fbq("track", event);
-}
-
 function validate(name: string, phone: string, ageConfirmed: boolean): string {
   if (name.trim().length < 2) return "נא להזין שם מלא";
   if (!/^\+?\d{9,15}$/.test(phone.replace(/[\s-]/g, ""))) return "מספר טלפון לא תקין";
@@ -295,6 +290,7 @@ function BonusForm() {
       ageConfirmed: data.get("ageConfirmed") === "on",
       source: window.location.search,
       placement: "footer",
+      eventId: newEventId("lead"),
     };
     const problem = validate(payload.name, payload.phone, payload.ageConfirmed);
     if (problem) {
@@ -316,7 +312,7 @@ function BonusForm() {
         tab.opener = null;
         tab.location.href = siteUrl();
       }
-      trackPixel("Lead");
+      trackPixel("Lead", payload.eventId);
       setOpened(Boolean(tab));
       setStatus("idle");
       setDone(true);
